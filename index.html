@@ -11,85 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        img {
-            width: 20vw;
-        }
-
-        button {
-            width: 20vw;
-        }
-
-        #score {
-            width: 20vw;
-            border: 3px solid lightslategray;
-            background-color: rgba(119, 136, 153, 0.452);
-            margin: auto;
-        }
-
-        @keyframes jump {
-            0% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        .jump {
-            animation: jump 0.2s;
-        }
-
-        #new,#loser{
-            display: none;
-        }
-
-        
-        #new,#loser img{
-            width: 10vw;
-        }
-        
-
-        #timeImg {
-            width: 10vw;
-            aspect-ratio: 1 / 1;
-            background-image: url(./images/clock.png);
-            background-size: cover;
-            background-repeat: no-repeat;
-            position: relative;
-        }
-
-        #time {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-60%, -50%);
-            font-weight: bolder;
-            text-shadow: 1px 1px 2px black;
-        }
-
-        #shot img{
-            width: 10vw;
-        }
-
-        @media (max-width: 576px) {
-            .time {
-                width: 30vw;
-            }
-            #new,#loser{
-                width: 30vw;
-                position: absolute;
-                right: 2vw;
-                top: 20%;
-            }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="./css/style.css">
 
 <body>
 
@@ -159,16 +81,26 @@
 
     <script>
         $(document).ready(function () {
-            const start = document.getElementById('start')
-            const shot = document.getElementById('shot')
-            const stop = document.getElementById('stop')
-            const scoreDiv = document.getElementById('score')
-            const timeSpan = document.getElementById('time')
-            const timeImg = document.getElementById('timeImg')
-            const topSpan = document.getElementById('top')
-            const img = document.getElementById('img')
-            const newPic = document.getElementById('new')
-            const loser =document.getElementById('loser')
+            const start = $('#start')
+            const shot = $('#shot')
+            const stop = $('#stop')
+            const scoreDiv = $('#score')
+            const timeSpan = $('#time')
+            const timeImg = $('#timeImg')
+            const topSpan = $('#top')
+            const img = $('#img')
+            const newPic = $('#new')
+            const loser =$('#loser')
+            // const start = document.getElementById('start')
+            // const shot = document.getElementById('shot')
+            // const stop = document.getElementById('stop')
+            // const scoreDiv = document.getElementById('score')
+            // const timeSpan = document.getElementById('time')
+            // const timeImg = document.getElementById('timeImg')
+            // const topSpan = document.getElementById('top')
+            // const img = document.getElementById('img')
+            // const newPic = document.getElementById('new')
+            // const loser =document.getElementById('loser')
             // localStorage.setItem('maxScore',0)
             let score = 0;
             let time = 30;
@@ -177,51 +109,51 @@
             let maxScore = localStorage.getItem('maxScore');
             console.log(maxScore);
 
-            shot.style.display = 'none'
-            topSpan.innerHTML = maxScore;
+            shot.css('display','none');
+            topSpan.html(maxScore);
 
-            start.addEventListener('click', function () {
+            start.on('click', function () {
                 time = 30;
                 score = 0
-                scoreDiv.innerHTML = 0;
+                // scoreDiv.html();
                 console.log('start');
-                shot.style.display = 'inline-block';
-                newPic.style.display = 'none';
-                loser.style.display = 'none';
-                start.style.display = 'none';
-                timeSpan.innerHTML = time;
-                timeSpan.setAttribute('class', '');
+                shot.css('display','inline-block');
+                newPic.css('display','none');
+                loser.css('display','none');
+                start.css('display','none');
+                timeSpan.html(time);
+                timeSpan.attr('class', '');
 
                 timeFun = setInterval(() => {
-                    timeSpan.innerHTML = time;
+                    timeSpan.html(time);
                     if (time < 15) {
-                        timeSpan.setAttribute('class', 'text-danger display-5')
-                        timeImg.classList.add('jump');
+                        timeSpan.attr('class', 'text-danger display-5')
+                        timeImg.addClass('jump');
                         setTimeout(() => {
-                            timeImg.classList.remove('jump');
+                            timeImg.removeClass('jump');
                         }, 200); // 動畫時間要跟 CSS 一樣
                     }
                     if (time === 0) {
 
-                        shot.style.display = 'none';
-                        start.style.display = 'inline-block';
-                        let top = Number(topSpan.innerText);
+                        shot.css('display','none');
+                        start.css('display','inline-block');
+                        let top = Number(topSpan.html());
                         console.log('start top', top);
                         console.log('start toptypeof', typeof (top));
 
-                        let newScore = Number(scoreDiv.innerText);
+                        let newScore = Number(scoreDiv.html());
                         console.log('typeof newScore', typeof (newScore));
 
                         clearInterval(timeFun);
                         if (newScore > top) {
-                            topSpan.innerHTML = newScore
+                            topSpan.html(newScore);
                             localStorage.setItem('maxScore', String(newScore));
 
 
-                            newPic.style.display = 'block'
-                            timeSpan.innerHTML = 0;
+                            newPic.css('display','block');
+                            timeSpan.html(0);
                         }else{
-                            loser.style.display ='block'
+                            loser.css('display','block');
                         }
                     }
                     time--;
@@ -232,12 +164,12 @@
 
             })
 
-            shot.addEventListener('click', function () {
+            shot.on('click', function () {
                 console.log('shot');
-                img.classList.add('jump');
+                img.addClass('jump');
 
                 setTimeout(() => {
-                    img.classList.remove('jump');
+                    img.removeClass('jump');
                 }, 200); // 動畫時間要跟 CSS 一樣
 
 
@@ -247,34 +179,130 @@
                     score += 2;
                 }
 
-                scoreDiv.innerHTML = score;
+                scoreDiv.html(score);
 
             })
 
-            stop.addEventListener('click', function () {
+            stop.on('click', function () {
                 console.log('stop');
                 clearInterval(timeFun);
-                shot.style.display = 'none';
-                start.style.display = 'inline-block';
-                timeSpan.innerHTML = 30;
-                let top = Number(topSpan.innerText);
-                let newScore = Number(scoreDiv.innerText);
+                shot.css('display','none');
+                start.css('display','inline-block');
+                // timeSpan.text();
+                let top = Number(topSpan.html());
+                let newScore = Number(scoreDiv.html());
                 console.log(newScore);
                 console.log('top', top);
+                console.log('typeOf top',typeof(top));
 
 
                 if (newScore > top) {
-                    topSpan.innerHTML = newScore
+                    topSpan.html(newScore);
                     localStorage.setItem('maxScore', String(newScore));
-                    newPic.style.display = 'block'
+                    newPic.css('display','block');
                 }else{
-                    loser.style.display ='block'
+                    loser.css('display','block');
                 }
                 score = 0;
 
 
-                scoreDiv.innerHTML = score;
+                scoreDiv.html(score);
             })
+            // start.addEventListener('click', function () {
+            //     time = 30;
+            //     score = 0
+            //     scoreDiv.innerHTML = 0;
+            //     console.log('start');
+            //     shot.style.display = 'inline-block';
+            //     newPic.style.display = 'none';
+            //     loser.style.display = 'none';
+            //     start.style.display = 'none';
+            //     timeSpan.innerHTML = time;
+            //     timeSpan.setAttribute('class', '');
+
+            //     timeFun = setInterval(() => {
+            //         timeSpan.innerHTML = time;
+            //         if (time < 15) {
+            //             timeSpan.setAttribute('class', 'text-danger display-5')
+            //             timeImg.classList.add('jump');
+            //             setTimeout(() => {
+            //                 timeImg.classList.remove('jump');
+            //             }, 200); // 動畫時間要跟 CSS 一樣
+            //         }
+            //         if (time === 0) {
+
+            //             shot.style.display = 'none';
+            //             start.style.display = 'inline-block';
+            //             let top = Number(topSpan.innerText);
+            //             console.log('start top', top);
+            //             console.log('start toptypeof', typeof (top));
+
+            //             let newScore = Number(scoreDiv.innerText);
+            //             console.log('typeof newScore', typeof (newScore));
+
+            //             clearInterval(timeFun);
+            //             if (newScore > top) {
+            //                 topSpan.innerHTML = newScore
+            //                 localStorage.setItem('maxScore', String(newScore));
+
+
+            //                 newPic.style.display = 'block'
+            //                 timeSpan.innerHTML = 0;
+            //             }else{
+            //                 loser.style.display ='block'
+            //             }
+            //         }
+            //         time--;
+
+
+            //     }, 1000)
+
+
+            // })
+
+            // shot.addEventListener('click', function () {
+            //     console.log('shot');
+            //     img.classList.add('jump');
+
+            //     setTimeout(() => {
+            //         img.classList.remove('jump');
+            //     }, 200); // 動畫時間要跟 CSS 一樣
+
+
+            //     if (time <= 15) {
+            //         score += 3;
+            //     } else {
+            //         score += 2;
+            //     }
+
+            //     scoreDiv.innerHTML = score;
+
+            // })
+
+            // stop.addEventListener('click', function () {
+            //     console.log('stop');
+            //     clearInterval(timeFun);
+            //     shot.style.display = 'none';
+            //     start.style.display = 'inline-block';
+            //     timeSpan.innerHTML = 30;
+            //     let top = Number(topSpan.innerText);
+            //     let newScore = Number(scoreDiv.innerText);
+            //     console.log(newScore);
+            //     console.log('top', top);
+
+
+            //     if (newScore > top) {
+            //         topSpan.innerHTML = newScore
+            //         localStorage.setItem('maxScore', String(newScore));
+            //         newPic.style.display = 'block'
+            //     }else{
+            //         loser.style.display ='block'
+            //     }
+            //     score = 0;
+
+
+            //     scoreDiv.innerHTML = score;
+            // })
 
 
         });
